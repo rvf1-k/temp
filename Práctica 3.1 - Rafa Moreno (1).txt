@@ -1,0 +1,99 @@
+Práctica 3.1
+Despliegue de aplicaciones con Node Express
+Introducción
+Aquí se va a realizar el despliegue de aplicaciones Node.js sobre un servidor Node
+Express.
+
+Instalación de Node.js, Express y test de la primera
+aplicación
+Consta en instalar en la Debian 13 tanto Node.js como Express y crear un archivo .js
+para comprobar que el despliegue funciona.
+
+Instalación de Node.js
+Actualizamos e instalamos curl:
+sudo apt update
+sudo apt install -y curl
+Añadimos el repositorio de Node.js LTS 22, con este comando descargamos el script
+de configuración de NodeSecure y lo pasa al shell para que lo ejecute y configure.
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+
+Lo instalamos con sudo apt install -y nodejs .
+
+Y verificamos la instalación con node –v y npm –v .
+
+Creación del directorio de trabajo
+Creamos una carpeta de home para almacenar el proyecto a desplegar:
+mkdir ~/mi_primer_app
+cd ~/mi_primer_app
+
+Inicializar el proyecto
+Con el siguiente comando creamos un fichero package.json, con los metadatos del
+proyecto y scripts: npm init –y .
+
+Instalación de Express
+Instalamos el framework para Node.js, Express con npm install express .
+
+Crear la primera aplicación
+Creamos el archivo app.js en el directorio con nano app.js y le añadimos lo
+siguiente:
+const express = require('express');
+const app = express();
+const port = 3000;
+app.get('/', (req, res) => {
+res.send('¡Hola mundo desde Express en Debian 11!');
+});
+app.listen(port, () => {
+console.log(`Servidor escuchando en http://0.0.0.0:${port}`);
+});
+
+Iniciar el servidor
+Iniciamos el servidor con node app.js .
+
+Y desde la máquina local, accedemos a http://IP-de-tu-maquina-virtual:3000
+y se verá el mensaje “¡Hola mundo desde Express en Debian 13!”.
+
+Despliegue de una nueva aplicación
+Ahora realizaremos el despliegue de una aplicación de terceros, en este caso nodejstodo.
+Nos dirigimos a home con cd ~ .
+Si no está instalado git lo instalamos:
+sudo apt update
+sudo apt install git –y
+
+Y clonamos el repositorio y nos dirigimos a este:
+git clone https://github.com/missating/nodejs-todo
+cd nodejs-todo/
+
+Instalamos dependencias con npm install .
+
+En el momento que tratamos de iniciar con npm run start, y mostrará npm error
+Missing script: "start".
+
+Tarea
+Ejercicio 1
+Apartado a
+La modificación necesaria para que funcione es añadir la linea en script “start”: “node
+main.js”,
+
+Apartado b
+Se ha hecho la modificación en el package.json del repositorio.
+
+Apartado c
+La aplicación se inicializa con el index.js
+
+Por lo tanto, hay que modificar el archivo de package.json del repositorio para que
+inicialice también el archivo index.js, añadiendo el "start": "node index.js",
+
+Ahora ya no aparece el error y se despliega la aplicación.
+
+Ejercicio 2
+El sitio que voy a utilizar es Webstore app without Database para no prescindir de BD.
+Clonamos el repositorio en el home y dirigimos a su directorio:
+git clone https://github.com/learning-node-by-projects/webstore-appwithout-Database.git
+cd webstore-app-without-Database
+
+Instalamos dependencias con npm install
+
+Iniciamos con npm start , y ya hemos desplegado la aplicación.
+
+Podemos acceder desde http://IP-de-tu-maquina-virtual:3000 .
+
